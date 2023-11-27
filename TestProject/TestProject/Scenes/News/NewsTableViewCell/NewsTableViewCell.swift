@@ -26,7 +26,6 @@ final class NewsTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.isHidden = true
         return label
     }()
 
@@ -85,7 +84,7 @@ final class NewsTableViewCell: UITableViewCell {
         let url = URL(string: news.urlToImage ?? "")
         newsImageView.kf.setImage(with: url)
         newsTitleLabel.text = news.title
-        newsAuthorLabel.text = news.authors
+        newsAuthorLabel.text = news.author
     }
 }
 

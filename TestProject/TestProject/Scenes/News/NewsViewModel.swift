@@ -12,7 +12,7 @@ protocol NewsViewModelDelegate {
     func showError(_ error: Error)
 }
 
-protocol NewsViewModel {
+protocol NewsViewModel: AnyObject {
     var delegate: NewsViewModelDelegate? { get set }
     func viewDidLoad()
 }
@@ -30,7 +30,7 @@ final class DefaultNewsViewModel: NewsViewModel {
 
     // MARK: - Public Methods
     func viewDidLoad() {
-        //fetchNews()
+        fetchNews()
     }
     
     // MARK: - Private Methods
@@ -40,8 +40,8 @@ final class DefaultNewsViewModel: NewsViewModel {
             guard let self else {return}
             switch result {
             case .success(let article):
-                self.delegate?.newsFetched(self.newsList)
-                self.newsList.append(article.articles)
+                self.delegate?.newsFetched(article.articles)
+                self.newsList.append(contentsOf: article.articles)
             case .failure(let error):
                 self.delegate?.showError(error)
             }

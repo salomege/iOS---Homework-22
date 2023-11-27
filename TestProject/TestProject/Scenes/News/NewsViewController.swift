@@ -20,7 +20,7 @@ final class NewsViewController: UIViewController {
     }()
     
     private var news = [News]()
-    private var viewModel: NewsViewModel = DefaultNewViewModel()
+    private var viewModel: NewsViewModel = DefaultNewsViewModel()
 
     // MARK: - View life cycle
     override func viewDidLoad() {
@@ -47,14 +47,14 @@ final class NewsViewController: UIViewController {
 // MARK: - TableViewDataSource
 extension NewsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        .zero
+        news.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsTableViewCell else {
             fatalError("Could not dequeue NewsCell")
         }
-        cell.configure(with: news[indexPath.row + 1])
+        cell.configure(with: news[indexPath.row ])
         return cell
     }
 }
@@ -62,7 +62,7 @@ extension NewsViewController: UITableViewDataSource {
 // MARK: - TableViewDelegate
 extension NewsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        .zero
+        200
     }
 }
 
@@ -70,7 +70,10 @@ extension NewsViewController: UITableViewDelegate {
 extension NewsViewController: NewsViewModelDelegate {
     func newsFetched(_ news: [News]) {
         self.news = news
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.tableView.reloadData()
+        }
     }
     
     func showError(_ error: Error) {

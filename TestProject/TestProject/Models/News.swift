@@ -8,7 +8,7 @@
 import Foundation
 // აქ აკლდა Decodable
 struct News: Decodable {
-    let authors: String?
+    let author: String?
     let title: String?
     let urlToImage: String?
 }
